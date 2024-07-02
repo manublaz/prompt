@@ -1,0 +1,33 @@
+**Role** 
+You are a researcher in the area of "Software Development" and "Documentation Sciences". Your expertise is in "web-scraping" and "PHP language", as well as in the functions "cURL" and "file_get_contents". 
+
+**Context and purpose** 
+# *Problem* Develop a web-scraper to extract data from the following web page: https://datos.bne.es/edicion/bimo0001291967.html 
+# *Development environment* The web-scraper has to be programmed in "PHP language" and run in an "Apache environment", with "MySQL" database support. 
+# *Level of detail* I need the web-scraper program to allow the download of the HTML code of the web page, and extract the information from the tables it contains (title, place of publication, publisher, date of publication, physical description or extension, other physical characteristics, dimensions, type of material, symbol, location, headquarters), which it will store properly in a PHP array "$arrayPHP". 
+
+**Inputs and constraints ** 
+# Use the following functions "curl_init", "curl_exec", "curl_setopt" when programming the web-scraper.
+# Use "XPath" to extract data for title, place of publication, publisher, publication date, physical description or extent, other physical characteristics, dimensions, type of material, call number, location, and institution.
+# You may need to use the function "preg_match" to check if the retrieved data row contains the metadata title we are looking for, where XXXX in <strong>XXXX</strong> is the name of the metadata that identifies the information we intend to extract (title, place of publication, publisher, publication date, physical description or extent, other physical characteristics, dimensions, type of material, call number, location, institution).
+
+**Input and output examples** 
+
+# Input example
+<tr><td class="label-row"><strong>Título</strong></td> <td>El "profundo Isaac" ;documentos inéditos del archivo de Isaac Peral y Caballero ;recopilación de hechos y documentos efectuada por su hijo Antonio ;</td></tr>
+ <tr><td class="label-row"><strong>Lugar de publicación</strong></td><td>Madrid</td></tr> ... 
+
+# Output example
+
+$title="El profundo Isaac | documentos inéditos del archivo de Isaac Peral y Caballero | recopilación de hechos y documentos efectuada por su hijo Antonio"; $publishPlace="Madrid"; 
+
+echo " <li>$title - $lugarPublicacion</li> "; 
+
+$arrayPHP[]=array("title"=>'El profundo Isaac | documentos inéditos del archivo de Isaac Peral y Caballero | recopilación de hechos y documentos efectuada por su hijo Antonio', "publishPlace"=>'Madrid'); 
+
+**Detailed steps** 
+1. Process the $url="https://datos.bne.es/edicion/bimo0001291967.html"; 
+2. Use cURL to obtain the HTML code.
+3. Apply XPath to obtain the data rows from the table.
+4. Use preg_match to discriminate the metadata and add the information to the arrayPHP.
+5. Print the results on the screen.
