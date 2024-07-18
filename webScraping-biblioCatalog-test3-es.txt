@@ -1,33 +1,24 @@
 **Rol** 
-Eres un investigador del área de "Desarrollo de Software" y "Ciencias de la Documentación". Tus conocimientos son especializados en "web-scraping" y en "lenguaje PHP", así como en las funciones "cURL" y "file_get_contents". 
+Eres un investigador del área de "Desarrollo de Software" y "Ciencias de la Documentación". Tus conocimientos son especializados en "web-scraping" y en "lenguaje PHP".
 
 **Contexto y propósito** 
-# *Problema* Desarrollar un web-scraper para extraer datos de la siguiente página web: https://datos.bne.es/edicion/bimo0001291967.html 
-# *Ambiente de desarrollo* El web-scraper se tiene que programar en "lenguaje PHP" y ejecutarse en un "entorno Apache", con soporte de base de datos "MySQL". 
-# *Nivel de detalle* Necesito que el programa web-scraper permita la descarga del código HTML de la página web, y extraiga la información de las tablas que contienen (título, lugar de publicación, editorial, fecha de publicación, descripción física o extensión, otras características físicas, dimensiones, tipo de material, signatura, localización, sede), que almacenará debidamente en un array PHP "$arrayPHP". 
+# *Problema* Reutilizar el programa de web-scraping que se proporciona, agregando códigos PHP necesarios, de forma que permitan su ejecución en bucle para recopilar los registros bibliográficos del catálogo.
+# *Ambiente de desarrollo* El software se programa en "lenguaje PHP" y se ejecuta en un "entorno Apache", con soporte de base de datos "MySQL". 
+
 
 **Entradas y restricciones** 
-# Utiliza las siguientes funciones "curl_init", "curl_exec", "curl_setopt" a la hora de programar el web-scraper. 
-# Utiliza "XPath" para extraer los datos de título, lugar de publicación, editorial, fecha de publicación, descripción física o extensión, otras características físicas, dimensiones, tipo de material, signatura, localización, sede. 
-# Posiblemente tengas que usar la función "preg_match" para verificar si la fila de datos recuperada, contiene el título del metadato que buscamos, donde XXXX en <strong>XXXX</strong> es el nombre del metadato que identifica la información que pretendemos extraer (título, lugar de publicación, editorial, fecha de publicación, descripción física o extensión, otras características físicas, dimensiones, tipo de material, signatura, localización, sede) 
+- Respeta el código que se te proporciona.
+- Agregar códigos para la configuración de la conexión a la base de datos, crear y verificar conexión.
+- Crear un bucle principal para recorrer los registros del catálogo de datos BNE.
+- Crear una variable $number que dé formato a la variable contador del bucle principal, con ceros a la izquierda, para componer un número de 10 cifras con ceros delante, de esta forma https://datos.bne.es/edicion/bimo$number.html usando la función "str_pad"
+- Introducir una función para manejar valores nulos o vacíos, en caso de que la fuente de información no proporcione datos.
+- La tabla MySQL se llama "datosBNE" y su estructura es la siguiente "url, author, title, placeOfPublication, publisher, publicationDate, physicalDescription, otherPhysicalCharacteristics, dimensions, materialType, signature, location, headquarters".
+- Añadir el código SQL de inserción y ejecutarlo para la estructura de tabla indicada, cargando la información recopilada en el proceso de web-scraping.
+- Agregar una parada de 3 segundos después de cada inserción, para no provocar un problema de concurrencia en el servidor.
+- En caso de que el valor del título $data['title'] sea no especificado o nulo, entonces, salta a la siguiente url del bucle. 
 
-**Ejemplos de entrada y salida** 
-
-# Ejemplo de entrada 
-<tr><td class="label-row"><strong>Título</strong></td> <td>El "profundo Isaac" ;documentos inéditos del archivo de Isaac Peral y Caballero ;recopilación de hechos y documentos efectuada por su hijo Antonio ;</td></tr>
- <tr><td class="label-row"><strong>Lugar de publicación</strong></td><td>Madrid</td></tr> ... 
-
-# Ejemplo de salida 
-
-$titulo="El profundo Isaac | documentos inéditos del archivo de Isaac Peral y Caballero | recopilación de hechos y documentos efectuada por su hijo Antonio"; $lugarPublicacion="Madrid"; 
-
-echo " <li>$titulo - $lugarPublicacion</li> "; 
-
-$arrayPHP[]=array("titulo"=>'El profundo Isaac | documentos inéditos del archivo de Isaac Peral y Caballero | recopilación de hechos y documentos efectuada por su hijo Antonio', "lugarPublicacion"=>'Madrid'); 
 
 **Pasos detallados** 
-1. Procesar la $url="https://datos.bne.es/edicion/bimo0001291967.html"; 
-2. Usar cURL para obtener el código HTML 
-3. Aplicar XPath para obtener las filas de datos de la tabla 
-4. Discriminar con preg_match el metadato y agregar la información al arrayPHP 
-5. Imprimir en pantalla los resultados
+1. Agregar al código conexión a la base de datos
+2. Crear un bucle principal que permita recorrer los registros del catálogo
+3. Gestiona la preparación de la consulta SQL y su ejecución para insertar registros en MySQL
